@@ -138,6 +138,21 @@
         background-color: black; /* Ensures black bars if aspect ratio doesn't match */
     }
 
+    #play-button { /* Added styles for the play button */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 15px 30px;
+        font-size: 20px;
+        background-color: #0a2c7b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 10000; /* Above the video */
+    }
+
     @media (max-width:920px){
         .landbot-container-wrapper {
             max-width:350px;
@@ -304,10 +319,9 @@
 <body>
 
     <div id="video-overlay">
-<video id="intro-video" autoplay playsinline>
-            <source src="video0.mp4" type="video/mp4"> 
+        <video id="intro-video" muted playsinline> <source src="video0.mp4" type="video/mp4"> 
               الفيديو بيحمل الصبر        </video>
-    </div>
+        <button id="play-button">تشغيل الفيديو</button> </div>
 
     <div class="landbot-container-wrapper">
         <script SameSite="None; Secure" type="module" src="https://cdn.landbot.io/landbot-3/landbot-3.0.0.mjs"></script>
@@ -324,10 +338,15 @@
         document.addEventListener("DOMContentLoaded", function() {
             const videoOverlay = document.getElementById('video-overlay');
             const introVideo = document.getElementById('intro-video');
+            const playButton = document.getElementById('play-button'); // Get the play button
             const landbotContainer = document.querySelector('.landbot-container-wrapper');
 
-            // Set the video source (make sure the path is correct)
-            // introVideo.src = 'your-intro-video.mp4'; 
+            // Event listener for the play button
+            playButton.addEventListener('click', function() {
+                introVideo.muted = false; // Unmute the video
+                introVideo.play(); // Play the video
+                playButton.style.display = 'none'; // Hide the play button
+            });
 
             // Event listener for when the video ends
             introVideo.addEventListener('ended', function() {
